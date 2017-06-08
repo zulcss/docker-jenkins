@@ -11,3 +11,17 @@ run apt-add-repository \
 	edge"
 run apt-get update -y
 run apt-get -y install docker-ce
+
+# setup jenkins
+run apt-get -y install openssh-server openjdk-8-jdk
+run sed -ri 's/^session\s+required\s+pam_loginuid.so$/session optional pam_loginuid.so/' /etc/pam.d/sshd
+run useradd jenkins -m -s /bin/bash
+run mkdir /home/jenkins/.ssh
+copy files/authorized_keys /home/jenkins/.ssh/authorized_keys
+run chmod 700 /home/jenkins/.ssh/authorized_keys
+run chown -R jenkins /home/jenkins
+run chgrp -R jenkins /home/jenkins
+run echo "jenkins    ALL=(ALL)    ALL" >> /etc/sudoers
+
+expose 22
+cmd ["/usr/sbin/sshd", "-D"]
