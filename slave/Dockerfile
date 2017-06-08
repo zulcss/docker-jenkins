@@ -4,9 +4,9 @@ from ubuntu:latest
 run apt-get update
 run apt-get -y install apt-transport-https ca-certificates curl lsb-release \
 	software-properties-common
-run curl -fsSL https://download.docker.com/ubuntu/debian/gpg | apt-key add -
+run curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 run apt-add-repository \
-	"deb [arch=amd64] https://download.docker.com/ubuntu/debian \
+	"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
 	$(lsb_release -cs) \
 	edge"
 run apt-get update -y
